@@ -94,9 +94,10 @@ def update():
     conn = sqlite3.connect('HyperWidgetPPConfig.db')
     pp = request.form['json']
     try:
-        conn.execute("UPDATE PPConfig SET Config = ?", [pp])
+        a = json.loads(pp)
     except:
         return "INVALID JSON"
+    conn.execute("UPDATE PPConfig SET Config = ?", [pp])
     conn.commit()
     conn.close()
     return redirect(url_for('edit'))
