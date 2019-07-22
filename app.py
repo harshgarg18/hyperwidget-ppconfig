@@ -91,18 +91,31 @@ pp = {
 
 @app.route('/update', methods = ['POST'])
 def update():
-    global pp
-    pp = json.loads(request.form['json'])
+    conn = sqlite3.connect('HyperWidgetPPConfig.db')
+
+    pp = request.form['json']
+    conn.execute("UPDATE PPConfig SET Config = ?", [pp])
+    conn.commit()
+    conn.close()
     return redirect(url_for('edit'))
 
 @app.route('/edit')
 def edit():
-    x = json.dumps(pp, indent = 4, sort_keys=True)
+    conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    cursor = conn.execute('SELECT Config FROM PPConfig')
+    for row in cursor:
+        pp = row[0]
+    a = json.loads(pp)
+    x = json.dumps(a, indent = 4, sort_keys=True)
     return render_template('display.html', jsonpp = x)
 
 @app.route('/')
 def config():
+    conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    cursor = conn.execute('SELECT Config FROM PPConfig')
+    for row in cursor:
+        pp = row[0]
     return pp
 
 if __name__ == '__main__':
-   app.run(debug = True, port = os.getenv('PORT', '8000'), host = os.getenv('IP', '0.0.0.0'))
+    app.run(debug = True, port = os.getenv('PORT', '8000'), host = os.getenv('IP', '0.0.0.0'))
