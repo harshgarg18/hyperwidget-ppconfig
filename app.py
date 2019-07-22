@@ -10,7 +10,7 @@ def config():
             
             "primaryFont": "Radomir-Tinkov-Gilroy",
             
-            "modalView": "true",
+            "modalView": "false",
 
             "toolbar": {
                         "back": "VISIBLE",
