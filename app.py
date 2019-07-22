@@ -91,15 +91,16 @@ pp = {
 
 @app.route('/update', methods = ['POST'])
 def update():
+    conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    pp = request.form['json']
     try:
-        conn = sqlite3.connect('HyperWidgetPPConfig.db')
-        pp = request.form['json']
         conn.execute("UPDATE PPConfig SET Config = ?", [pp])
-        conn.commit()
-        conn.close()
-        return redirect(url_for('edit'))
     except:
-        return "Invalid JSON"
+        return "INVALID JSON"
+    conn.commit()
+    conn.close()
+    return redirect(url_for('edit'))
+
 
 @app.route('/edit')
 def edit():
