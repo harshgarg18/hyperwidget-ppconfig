@@ -91,13 +91,15 @@ pp = {
 
 @app.route('/update', methods = ['POST'])
 def update():
-    conn = sqlite3.connect('HyperWidgetPPConfig.db')
-
-    pp = request.form['json']
-    conn.execute("UPDATE PPConfig SET Config = ?", [pp])
-    conn.commit()
-    conn.close()
-    return redirect(url_for('edit'))
+    try:
+        conn = sqlite3.connect('HyperWidgetPPConfig.db')
+        pp = request.form['json']
+        conn.execute("UPDATE PPConfig SET Config = ?", [pp])
+        conn.commit()
+        conn.close()
+        return redirect(url_for('edit'))
+    except:
+        return "Invalid JSON"
 
 @app.route('/edit')
 def edit():
@@ -116,6 +118,15 @@ def config():
     for row in cursor:
         pp = row[0]
     return pp
+
+@app.route('/default')
+def insert():
+    conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    cursor = conn.execute('SELECT Config FROM PPConfig')
+    conn.execute("UPDATE PPConfig SET Config = ?", [json.dumps(pp)])
+    conn.commit()
+    conn.close()
+    return "Default Inserted"
 
 if __name__ == '__main__':
     app.run(debug = True, port = os.getenv('PORT', '8000'), host = os.getenv('IP', '0.0.0.0'))
