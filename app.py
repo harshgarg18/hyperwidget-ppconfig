@@ -1,11 +1,11 @@
-from flask import Flask
-app = Flask(__name__)
+from flask import Flask, render_template, request, redirect, url_for
 import json
 import os
+import sqlite3
 
-@app.route('/')
-def config():
-    pp = {
+app = Flask(__name__)
+
+pp = {
             "primaryColor": "#4527A0",
             
             "primaryFont": "Radomir-Tinkov-Gilroy",
@@ -88,8 +88,21 @@ def config():
         }
 
         }
-        
+
+@app.route('/update', methods = ['POST'])
+def update():
+    global pp
+    pp = json.loads(request.form['json'])
+    return redirect(url_for('edit'))
+
+@app.route('/edit')
+def edit():
+    x = json.dumps(pp, indent = 4, sort_keys=True)
+    return render_template('display.html', jsonpp = x)
+
+@app.route('/')
+def config():
     return pp
 
-# if __name__ == '__main__':
-#    app.run(debug = True, port = os.getenv('PORT', '8000'), host = os.getenv('IP', '0.0.0.0'))
+if __name__ == '__main__':
+   app.run(debug = True, port = os.getenv('PORT', '8000'), host = os.getenv('IP', '0.0.0.0'))
