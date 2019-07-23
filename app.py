@@ -23,6 +23,8 @@ pp = {
                     },
             "popularBanks" : [],
 
+            "upiCollectWithGodel" : "true",
+
             "highlight": [
                 {
                     "group": "others",
