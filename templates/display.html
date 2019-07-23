@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <style>
-    html,body{
-      width: 100%;
-      height: 100%;
-    }
-    form,textarea {
-      width: 100%;
-      height: 90%;
-      font-size: 14px;
-    }
-  </style>
-</head>
+  <head>
 
-<body>
+    <title>Modify PP JSON</title>
+    
+    <style>
+      html,body{
+        width: 100%;
+        height: 100%;
+      }
+      form,textarea{
+        width: 100%;
+        height: 90%;
+        font-size: 14px;
+      }
+      input[type=submit]{
+        height: 100em;
+        width: 20em;
+      }
+    </style>
 
-<form action="https://tranquil-scrubland-10230.herokuapp.com//update" method = "POST">
-  <textarea name="json" rows="100" cols="160" id ="textarea"> {{ jsonpp }} </textarea>
-  <br>
-  <input type="submit">
-</form>
+  </head>
 
+  <body>
 
-</body>
+    <form action="https://tranquil-scrubland-10230.herokuapp.com//update" method = "POST">
+      <textarea name="json" id ="textarea"> {{ jsonpp }} </textarea>
+      <br>
+      <input type="submit">
+    </form>
+    
+  </body>
+
 </html>

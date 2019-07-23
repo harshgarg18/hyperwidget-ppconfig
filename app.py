@@ -6,7 +6,7 @@ import sqlite3
 app = Flask(__name__)
 
 pp = {
-            "primaryColor": "#4527A0",
+            "primaryColor": "#2196F3",
             
             "primaryFont": "Radomir-Tinkov-Gilroy",
             
