@@ -131,8 +131,8 @@ def edit():
     # cursor = conn.execute('SELECT Config FROM PPConfig')
     # for row in cursor:
     #     pp = row[0]
-    a = json.loads(pp)
-    x = json.dumps(a, indent = 4, sort_keys=True)
+    # a = json.loads(pp)
+    x = json.dumps(pp, indent = 4, sort_keys=True)
     return render_template('display.html', jsonpp = x)
 
 @app.route('/')
