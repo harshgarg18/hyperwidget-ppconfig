@@ -7,6 +7,7 @@ import sqlite3
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'Super Secret App Key'
 heroku = Heroku(app)
 db = SQLAlchemy(app)
 
