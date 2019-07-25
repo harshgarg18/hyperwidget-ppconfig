@@ -98,7 +98,7 @@ pp = {
 
 class PPConfig(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    config = db.Column(db.JSON)
+    config = db.Column(db.PickelType())
 
     def __init__(self, config):
         self.config = config
@@ -150,9 +150,9 @@ def insert():
     conf = PPConfig.query.get(1)
     a = json.dumps(pp)
     if conf is not None:
-        conf.config = a
+        conf.config = pp
     else:
-        db.session.add(a)
+        db.session.add(pp)
     db.session.commit()
     # conn = sqlite3.connect('HyperWidgetPPConfig.db')
     # cursor = conn.execute('SELECT Config FROM PPConfig')
