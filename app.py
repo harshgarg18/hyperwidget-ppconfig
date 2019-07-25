@@ -148,7 +148,7 @@ def config():
 @app.route('/default')
 def insert():
     conf = PPConfig.query.get(1)
-    a = json.loads(pp)
+    a = json.dumps(pp)
     if conf is not None:
         conf.config = a
     else:
