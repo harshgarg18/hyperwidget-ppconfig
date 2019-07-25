@@ -1,9 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_heroku import Heroku
 import json
 import os
 import sqlite3
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+heroku = Heroku(app)
+db = SQLAlchemy(app)
 
 pp = {
             "primaryColor": "#2196F3",
@@ -91,45 +96,68 @@ pp = {
 
         }
 
+class PPConfig(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    config = db.Column(db.JSON)
+
+    def __init__(self, config):
+        self.config = config
+
+
 @app.route('/update', methods = ['POST'])
 def update():
-    conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
     pp = request.form['json']
     try:
         a = json.loads(pp)
+        conf = PPConfig.query.get(1)
+        conf.config = pp
+        db.session.commit()
+        # conn.execute("UPDATE PPConfig SET Config = ?", [pp])
+        # conn.commit()
+        # conn.close()
+        flash("JSON Inserted")
     except:
-        return "INVALID JSON"
-    conn.execute("UPDATE PPConfig SET Config = ?", [pp])
-    conn.commit()
-    conn.close()
+        flash("INVALID JSON")
     return redirect(url_for('edit'))
 
 
 @app.route('/edit')
 def edit():
-    conn = sqlite3.connect('HyperWidgetPPConfig.db')
-    cursor = conn.execute('SELECT Config FROM PPConfig')
-    for row in cursor:
-        pp = row[0]
+    conf = PPConfig.query.get(1)
+    pp = conf.config
+    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    # cursor = conn.execute('SELECT Config FROM PPConfig')
+    # for row in cursor:
+    #     pp = row[0]
     a = json.loads(pp)
     x = json.dumps(a, indent = 4, sort_keys=True)
     return render_template('display.html', jsonpp = x)
 
 @app.route('/')
 def config():
-    conn = sqlite3.connect('HyperWidgetPPConfig.db')
-    cursor = conn.execute('SELECT Config FROM PPConfig')
-    for row in cursor:
-        pp = row[0]
+    conf = PPConfig.query.get(1)
+    pp = conf.config
     return pp
+    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    # cursor = conn.execute('SELECT Config FROM PPConfig')
+    # for row in cursor:
+    #     pp = row[0]
+    # return pp
 
 @app.route('/default')
 def insert():
-    conn = sqlite3.connect('HyperWidgetPPConfig.db')
-    cursor = conn.execute('SELECT Config FROM PPConfig')
-    conn.execute("UPDATE PPConfig SET Config = ?", [json.dumps(pp)])
-    conn.commit()
-    conn.close()
+    conf = PPConfig.query.get(1)
+    if conf is not None:
+        conf.config = pp
+    else:
+        db.session.add(pp)
+    db.session.commit()
+    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
+    # cursor = conn.execute('SELECT Config FROM PPConfig')
+    # conn.execute("UPDATE PPConfig SET Config = ?", [json.dumps(pp)])
+    # conn.commit()
+    # conn.close()
     return "Default Inserted"
 
 if __name__ == '__main__':
