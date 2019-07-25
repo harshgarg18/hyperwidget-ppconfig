@@ -111,7 +111,7 @@ def update():
     try:
         a = json.loads(pp)
         conf = PPConfig.query.get(1)
-        conf.config = pp
+        conf.config = a
         db.session.commit()
         # conn.execute("UPDATE PPConfig SET Config = ?", [pp])
         # conn.commit()
@@ -148,10 +148,11 @@ def config():
 @app.route('/default')
 def insert():
     conf = PPConfig.query.get(1)
+    a = json.loads(pp)
     if conf is not None:
-        conf.config = pp
+        conf.config = a
     else:
-        db.session.add(pp)
+        db.session.add(a)
     db.session.commit()
     # conn = sqlite3.connect('HyperWidgetPPConfig.db')
     # cursor = conn.execute('SELECT Config FROM PPConfig')
