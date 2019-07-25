@@ -98,7 +98,7 @@ pp = {
 
 class PPConfig(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    config = db.Column(db.PickelType())
+    config = db.Column(db.String(5000))
 
     def __init__(self, config):
         self.config = config
@@ -110,8 +110,9 @@ def update():
     pp = request.form['json']
     try:
         a = json.loads(pp)
+        x = json.dumps(a)
         conf = PPConfig.query.get(1)
-        conf.config = a
+        conf.config = x
         db.session.commit()
         # conn.execute("UPDATE PPConfig SET Config = ?", [pp])
         # conn.commit()
@@ -150,9 +151,9 @@ def insert():
     conf = PPConfig.query.get(1)
     a = json.dumps(pp)
     if conf is not None:
-        conf.config = pp
+        conf.config = a
     else:
-        db.session.add(pp)
+        db.session.add(a)
     db.session.commit()
     # conn = sqlite3.connect('HyperWidgetPPConfig.db')
     # cursor = conn.execute('SELECT Config FROM PPConfig')
