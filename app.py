@@ -153,7 +153,8 @@ def insert():
     if conf is not None:
         conf.config = a
     else:
-        db.session.add(a)
+        x = PPConfig(a)
+        db.session.add(x)
     db.session.commit()
     # conn = sqlite3.connect('HyperWidgetPPConfig.db')
     # cursor = conn.execute('SELECT Config FROM PPConfig')
