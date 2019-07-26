@@ -114,9 +114,9 @@ def update():
         conf = PPConfig.query.get(1)
         conf.config = x
         db.session.commit()
-        flash("JSON Inserted")
+        flash("JSON Inserted", category="success")
     except:
-        flash("INVALID JSON")
+        flash("INVALID JSON", catgeory="danger")
     return redirect(url_for('edit'))
 
 
