@@ -107,7 +107,6 @@ class PPConfig(db.Model):
 
 @app.route('/update', methods = ['POST'])
 def update():
-    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
     pp = request.form['json']
     try:
         a = json.loads(pp)
@@ -115,9 +114,6 @@ def update():
         conf = PPConfig.query.get(1)
         conf.config = x
         db.session.commit()
-        # conn.execute("UPDATE PPConfig SET Config = ?", [pp])
-        # conn.commit()
-        # conn.close()
         flash("JSON Inserted")
     except:
         flash("INVALID JSON")
@@ -128,11 +124,6 @@ def update():
 def edit():
     conf = PPConfig.query.get(1)
     pp = conf.config
-    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
-    # cursor = conn.execute('SELECT Config FROM PPConfig')
-    # for row in cursor:
-    #     pp = row[0]
-    # a = json.loads(pp)
     x = json.dumps(pp, indent = 4, sort_keys=True)
     return render_template('display.html', jsonpp = x)
 
@@ -141,11 +132,6 @@ def config():
     conf = PPConfig.query.get(1)
     pp = conf.config
     return pp
-    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
-    # cursor = conn.execute('SELECT Config FROM PPConfig')
-    # for row in cursor:
-    #     pp = row[0]
-    # return pp
 
 @app.route('/default')
 def insert():
@@ -157,11 +143,6 @@ def insert():
         x = PPConfig(a)
         db.session.add(x)
     db.session.commit()
-    # conn = sqlite3.connect('HyperWidgetPPConfig.db')
-    # cursor = conn.execute('SELECT Config FROM PPConfig')
-    # conn.execute("UPDATE PPConfig SET Config = ?", [json.dumps(pp)])
-    # conn.commit()
-    # conn.close()
     return "Default Inserted"
 
 if __name__ == '__main__':
