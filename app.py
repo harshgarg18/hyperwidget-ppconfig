@@ -116,7 +116,8 @@ def update():
         db.session.commit()
         flash("JSON Inserted", category="success")
     except:
-        flash("INVALID JSON", catgeory="danger")
+        return "INVALID JSON"
+        # flash("INVALID JSON", catgeory="danger")
     return redirect(url_for('edit'))
 
 
