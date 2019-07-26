@@ -111,13 +111,11 @@ def update():
     try:
         a = json.loads(pp)
         x = json.dumps(a)
-        conf = PPConfig.query.get(1)
-        conf.config = x
-        db.session.commit()
-        flash("JSON Inserted", category="success")
     except:
         return "INVALID JSON"
-        # flash("INVALID JSON", catgeory="danger")
+    conf = PPConfig.query.get(1)
+    conf.config = x
+    db.session.commit()
     return redirect(url_for('edit'))
 
 
