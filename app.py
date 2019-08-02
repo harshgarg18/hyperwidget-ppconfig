@@ -11,61 +11,68 @@ app.secret_key = 'Super Secret App Key'
 heroku = Heroku(app)
 db = SQLAlchemy(app)
 
-pp = {
-            "primaryColor": "#2196F3",
-            
-            "primaryFont": "Radomir-Tinkov-Gilroy",
-            
-            "modalView": "false",
 
-            "toolbar": {
-                        "back": "VISIBLE",
-                        "pageTitle": "PaymentPageHosted"
-                    },
-            
-            "screenTransition": {
-                        "duration": "200",
-                        "curve" : ["0.1", "0.4", "0.4", "0.9"]
-                    },
-            "popularBanks" : [],
-
-            "upiCollectWithGodel" : "true",
-
+pp =    {
+            "expandPopularNBView": "true",
+            "expandedWalletView": "false",
             "highlight": [
                 {
                     "group": "others",
+                    "onlyDisable": None,
+                    "onlyEnable": [
+                        "GOOGLEPAY",
+                        "PAYTM"
+                    ],
                     "po": "upi",
-                    "visibility": "VISIBLE",
-                    "onlyEnable": ["GOOGLEPAY","PAYTM"],
-                    "onlyDisable": None
+                    "visibility": "VISIBLE"
                 },
                 {
                     "group": "others",
+                    "onlyDisable": None,
+                    "onlyEnable": [
+                        "FREECHARGE"
+                    ],
                     "po": "wallets",
-                    "visibility": "visible",
-                    "onlyEnable": ["FREECHARGE"],
-                    "onlyDisable": None
+                    "visibility": "visible"
                 }
             ],
-
-            "saved": {
-                        "saved": "VISIBLE",
-                        "preffered": "VISIBLE",
-                        "otherSaved": "VISIBLE"
-                    },
-            
+            "highlightViewType": "grid",
+            "modalView": "false",
+            "moreOption": {
+                "icon": "wallet_icon",
+                "name": "WalletFlow",
+                "view": {
+                    "action": "payWithWallet",
+                    "content": "editText",
+                    "footer": "button",
+                    "toolbar": {
+                        "back": "VISIBLE",
+                        "pageTitle": "MoreOptionTitle"
+                    }
+                },
+                "visibility": "gone"
+            },
             "paymentOptions": [
                 {
                     "group": "others",
+                    "onlyDisable": [
+                        "GOOGLEPAY",
+                        "PAYPAL",
+                        "OLAPOSTPAID"
+                    ],
                     "po": "wallets",
-                    "visibility": "VISIBLE",
-                    "onlyDisable": ["GOOGLEPAY","PAYPAL","OLAPOSTPAID"]
+                    "visibility": "VISIBLE"
                 },
                 {
                     "group": "others",
+                    "onlyDisable": [
+                        "NB_DUMMY",
+                        "NB_SBM",
+                        "NB_SBT",
+                        "NB_CANR"
+                    ],
                     "po": "nb",
-                    "visibility": "VISIBLE",
-                    "onlyDisable" : ["NB_DUMMY", "NB_SBM", "NB_SBT", "NB_CANR"]
+                    "visibility": "VISIBLE"
                 },
                 {
                     "group": "others",
@@ -74,28 +81,42 @@ pp = {
                 },
                 {
                     "group": "others",
+                    "onlyDisable": [
+                        "CREDIT",
+                        "5500000000000004"
+                    ],
                     "po": "cards",
-                    "visibility": "VISIBLE",
-                    "onlyDisable": ["CREDIT","5500000000000004"]
+                    "visibility": "VISIBLE"
                 }
             ],
-
-            "moreOption" : {
-                    "visibility" : "gone",
-                    "icon"  : "wallet_icon",
-                    "name"  :   "WalletFlow",
-                    "view"  : {
-                        "toolbar" : {
-                            "back": "VISIBLE",
-                            "pageTitle": "MoreOptionTitle"
-                        },
-                    "content"   : "editText",
-                    "footer"    : "button",
-                    "action"    : "payWithWallet"
-                    }          
-        }
-
-        }
+            "popularBanks": [
+                "NB_AXIS",
+                "NB_ICICI",
+                "NB_SBI",
+                "NB_HDFC"
+            ],
+            "primaryColor": "#2196F3",
+            "primaryFont": "Radomir-Tinkov-Gilroy",
+            "saved": {
+                "otherSaved": "VISIBLE",
+                "preffered": "VISIBLE",
+                "saved": "VISIBLE"
+            },
+            "screenTransition": {
+                "curve": [
+                    "0.1",
+                    "0.4",
+                    "0.4",
+                    "0.9"
+                ],
+                "duration": "200"
+            },
+            "toolbar": {
+                "back": "VISIBLE",
+                "pageTitle": "PaymentPageHosted"
+            },
+            "upiCollectWithGodel": "true"
+        } 
 
 class PPConfig(db.Model):
     id = db.Column(db.Integer, primary_key=True)
