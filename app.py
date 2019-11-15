@@ -13,30 +13,25 @@ db = SQLAlchemy(app)
 
 
 pp =    {
+            "backgroundColor": "#F5F6F8",
+            "checkboxSize": "16",
+            "combineWallets": "false",
+            "containerPadding": "16",
+            "cornerRadius": "10.0",
+            "cvvInputBoxType": "boxed",
             "expandPopularNBView": "true",
-            "expandedWalletView": "false",
-            "highlight": [
-                {
-                    "group": "others",
-                    "onlyDisable": None,
-                    "onlyEnable": [
-                        "GOOGLEPAY",
-                        "PAYTM"
-                    ],
-                    "po": "upi",
-                    "visibility": "VISIBLE"
-                },
-                {
-                    "group": "others",
-                    "onlyDisable": None,
-                    "onlyEnable": [
-                        "FREECHARGE"
-                    ],
-                    "po": "wallets",
-                    "visibility": "visible"
-                }
-            ],
-            "highlightViewType": "grid",
+            "expandUpiView": "false",
+            "expandedWalletView": "true",
+            "fontColor": "#000000",
+            "fontSize": "16",
+            "gridFontSize": "14",
+            "gridIconSize": "38",
+            "headerSize": "18",
+            "highlight": [],
+            "highlightViewType": "list",
+            "iconSize": "38",
+            "lineSeparator": "true",
+            "listItemHeight": "60",
             "modalView": "false",
             "moreOption": {
                 "icon": "wallet_icon",
@@ -52,13 +47,25 @@ pp =    {
                 },
                 "visibility": "gone"
             },
+            "offers": "gone",
             "paymentOptions": [
+                {
+                    "group": "others",
+                    "po": "askAFriend",
+                    "visibility": "gone"
+                },
                 {
                     "group": "others",
                     "onlyDisable": [
                         "GOOGLEPAY",
                         "PAYPAL",
                         "OLAPOSTPAID"
+                    ],
+                    "onlyEnable": [
+                        "LAZYPAY",
+                        "PAYTM",
+                        "MOBIKWIK",
+                        "FREECHARGE"
                     ],
                     "po": "wallets",
                     "visibility": "VISIBLE"
@@ -76,15 +83,16 @@ pp =    {
                 },
                 {
                     "group": "others",
+                    "onlyDisable": [
+                        "SHAREit",
+                        "WhatsApp"
+                    ],
                     "po": "upi",
-                    "visibility": "VISIBLE"
+                    "visibility": "visible"
                 },
                 {
                     "group": "others",
-                    "onlyDisable": [
-                        "CREDIT",
-                        "5500000000000004"
-                    ],
+                    "onlyDisable": [],
                     "po": "cards",
                     "visibility": "VISIBLE"
                 }
@@ -95,11 +103,11 @@ pp =    {
                 "NB_SBI",
                 "NB_HDFC"
             ],
-            "primaryColor": "#2196F3",
-            "primaryFont": "Radomir-Tinkov-Gilroy",
+            "primaryColor": "#28B3E3",
+            "primaryFont": "Arial",
             "saved": {
-                "otherSaved": "VISIBLE",
-                "preffered": "VISIBLE",
+                "otherSaved": "visible",
+                "preffered": "visible",
                 "saved": "VISIBLE"
             },
             "screenTransition": {
@@ -111,11 +119,14 @@ pp =    {
                 ],
                 "duration": "200"
             },
+            "spacing": "16",
             "toolbar": {
                 "back": "VISIBLE",
-                "pageTitle": "PaymentPageHosted"
+                "pageTitle": "Payment Methods"
             },
-            "upiCollectWithGodel": "true"
+            "toolbarColor": "#FBBA19",
+            "upiCollectWithGodel": "false",
+            "verifyMobile": "true"
         } 
 
 class PPConfig(db.Model):
@@ -152,6 +163,22 @@ def config():
     conf = PPConfig.query.get(1)
     pp = conf.config
     return pp
+
+@app.route('/faq/prefetch')
+def prefetchFAQ():
+    return "Prefetch FAQ"
+
+@app.route('/faq/signing')
+def signingFAQ():
+    return "Signing FAQ"
+
+@app.route('/faq/initiate')
+def initiateFAQ():
+    return "Initiate FAQ"
+
+@app.route('/faq/process')
+def processFAQ():
+    return "Process FAQ"
 
 @app.route('/default')
 def insert():
