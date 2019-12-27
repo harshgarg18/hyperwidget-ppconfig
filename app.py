@@ -166,19 +166,19 @@ def config():
 
 @app.route('/faq/prefetch')
 def prefetchFAQ():
-    return "Prefetch FAQ"
+    return render_template('prefetch.html')
 
 @app.route('/faq/signing')
 def signingFAQ():
-    return "Signing FAQ"
+    return render_template('signature.html')
 
 @app.route('/faq/initiate')
 def initiateFAQ():
-    return "Initiate FAQ"
+    return render_template('initiate.html')
 
 @app.route('/faq/process')
 def processFAQ():
-    return "Process FAQ"
+    return render_template('process.html')
 
 @app.route('/default')
 def insert():
