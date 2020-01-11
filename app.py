@@ -180,6 +180,14 @@ def initiateFAQ():
 def processFAQ():
     return render_template('process.html')
 
+@app.route('/faq/terminate')
+def terminateFAQ():
+    return render_template('terminate.html')
+
+@app.route('/faq/orderID')
+def terminateFAQ():
+    return render_template('orderID.html')
+
 @app.route('/default')
 def insert():
     conf = PPConfig.query.get(1)
