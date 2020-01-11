@@ -185,7 +185,7 @@ def terminateFAQ():
     return render_template('terminate.html')
 
 @app.route('/faq/orderID')
-def terminateFAQ():
+def orderIdFAQ():
     return render_template('orderID.html')
 
 @app.route('/default')
